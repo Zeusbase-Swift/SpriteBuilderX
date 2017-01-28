@@ -54,6 +54,7 @@ typedef enum {
     kCCBTransformHandleRotate,
 //    kCCBTransformHandleAnchorPoint,
 //    kCCBTransformHandleSkew,
+    kCCBTransformHandleSize,
 } CCBTransformHandle;
 
 //typedef enum {
@@ -71,8 +72,9 @@ typedef enum {
     kCCBToolTranslate   =(1 << 0),
     kCCBToolGrab        =(1 << 1),
     kCCBToolRotate      =(1 << 2),
-    kCCBToolSelection   =(1 << 3),
-    kCCBToolMax         =(1 << 4)
+    kCCBToolSize        =(1 << 3),
+    kCCBToolSelection   =(1 << 4),
+    kCCBToolMax         =(1 << 5)
 }CCBTool;
 
 enum {
@@ -115,6 +117,7 @@ enum {
     CCNode* transformScalingNode;
     float transformStartSkewX;
     float transformStartSkewY;
+    CGSize transformContentSize;
     
     CCBTransformHandle currentMouseTransform;
     BOOL isMouseTransforming;
