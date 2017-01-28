@@ -1398,21 +1398,21 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGPoint vertexScaler = ccp(-1.0f,-1.0f);
     
     const float kTolerance = 0.01f;
-    if(fabsf(anchorPoint.x) <= kTolerance)
+    if(fabs(anchorPoint.x) <= kTolerance)
     {
         vertexScaler.x = 3;
     }
     
-    if(fabsf(anchorPoint.x) >=  1.0f - kTolerance)
+    if(fabs(anchorPoint.x) >=  1.0f - kTolerance)
     {
         vertexScaler.x = 1;
     }
     
-    if(fabsf(anchorPoint.y) <= kTolerance)
+    if(fabs(anchorPoint.y) <= kTolerance)
     {
         vertexScaler.y = 0;
     }
-    if(fabsf(anchorPoint.y) >=  1.0f - kTolerance)
+    if(fabs(anchorPoint.y) >=  1.0f - kTolerance)
     {
         vertexScaler.y = 2;
     }
@@ -1425,14 +1425,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGPoint vertexScaler = {1.0f,1.0f};
     
     const float kTolerance = 0.01f;
-    if(fabsf(anchorPoint.x) < kTolerance)
+    if(fabs(anchorPoint.x) < kTolerance)
     {
         if(cornerSelected == 0 || cornerSelected == 3)
         {
             vertexScaler.x = 0.0f;
         }
     }
-    if(fabsf(anchorPoint.x) >  1.0f - kTolerance)
+    if(fabs(anchorPoint.x) >  1.0f - kTolerance)
     {
         if(cornerSelected == 1 || cornerSelected == 2)
         {
@@ -1440,14 +1440,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         }
     }
     
-    if(fabsf(anchorPoint.y) < kTolerance)
+    if(fabs(anchorPoint.y) < kTolerance)
     {
         if(cornerSelected == 0 || cornerSelected == 1)
         {
             vertexScaler.y = 0.0f;
         }
     }
-    if(fabsf(anchorPoint.y) >  1.0f - kTolerance)
+    if(fabs(anchorPoint.y) >  1.0f - kTolerance)
     {
         if(cornerSelected == 2 || cornerSelected == 3)
         {
@@ -1951,7 +1951,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         }
         else
         {
-            CGPoint deltaPos = CGPointMake(intermediate.x - unRotatedMouse.x, intermediate.y - unRotatedMouse.y);
+            //CGPoint deltaPos = CGPointMake(intermediate.x - unRotatedMouse.x, intermediate.y - unRotatedMouse.y);
             
             switch (cornerIndex) {
                 case 0: //bl
@@ -1982,7 +1982,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                     break;
             }
             
-            //CCLOG(@"deltaPos %f %f/n", deltaPos.x, deltaPos.y);
+           //CCLOG(@"deltaPos %f %f", deltaPos.x, deltaPos.y);
             
             CGPoint scale = CGPointMake(unRotatedMouse.x/intermediate.x , unRotatedMouse.y / intermediate.y);
             if(isinf(scale.x) || isnan(scale.x))
@@ -1999,8 +1999,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             
             // Calculate new scale
-            float xScaleNew = scale.x * vertexScaler.x + transformStartScaleX * (1.0f - vertexScaler.x);
-            float yScaleNew = scale.y * vertexScaler.y + transformStartScaleY * (1.0f - vertexScaler.y);
+            float xScaleNew = (scale.x / transformStartScaleX) * vertexScaler.x + transformStartScaleX * (1.0f - vertexScaler.x);
+            float yScaleNew = (scale.y / transformStartScaleX) * vertexScaler.y + transformStartScaleY * (1.0f - vertexScaler.y);
             
             
             if ([event modifierFlags] & NSShiftKeyMask)
@@ -2024,7 +2024,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         //UpdateTheSizeTool
         cornerOrientation = ccpNormalize(deltaNew);
         //self.currentTool = kCCBToolSize;//force it to update.
-        //currently bad idea.. but will snap in some way..
+        //TODO: currently bad idea.. but will snap in some way..strange)
         //[snapLayer mouseDragged:pos event:event];
     }
     else if (isPanning)
